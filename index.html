@@ -5,6 +5,7 @@
 try {
     const ws = new WebSocket("wss://ce441-web.spchallenge.ir:1202/admin/ws");
 
+    
     ws.onopen = () => {
         ws.send("flag");
     };
